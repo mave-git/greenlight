@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     entrypoint: [bin/start]
-    image: bigbluebutton/greenlight:v2
+    image: grl2-bbb2:release-v2
     container_name: greenlight-v2
     env_file: .env
     restart: unless-stopped
@@ -18,13 +18,14 @@ services:
     volumes:
       - ./log:/usr/src/app/log
       - ./storage:/usr/src/app/storage
+      - ./bbb2_mvtool_de-terms.md:/usr/src/app/config/terms.md
 # When using sqlite3 as the database
 #      - ./db/production:/usr/src/app/db/production
 # When using postgresql as the database
     links:
       - db
   db:
-    image: postgres:13.2-alpine
+    image: postgres:9.5
     restart: unless-stopped
     ports:
       - 127.0.0.1:5432:5432
@@ -33,4 +34,4 @@ services:
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=fd157ba0fbab7f76
